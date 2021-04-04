@@ -27,26 +27,42 @@ ll count1=0;
 void solve(){
     vv(ll) v(n,0);
     rep(i,0,n)cin>>v[i];
-    set<ll>s;
-    ll count=0,a_pointer=0,b_pointer=0,max_len=-1;
-    while(a_pointer<v.size()){
-        if(s.find(v[a_pointer])!=s.end()){
-            s.erase(v[b_pointer]);
-            b_pointer++;
-            while(s.find(v[a_pointer])!=s.end()){
-                s.erase(v[b_pointer]);
-                b_pointer++;
+    mm(ll,vv(ll)) m;
+    rep(i,0,n)
+       m[v[i]].push_back(i+1);
+    sort(v.begin(),v.end());
+    bool flag=false;
+    rep(i,0,n){
+        rep(j,i+1,n){
+            ll l=j+1,r=n-1;
+            while(l<r){
+                if((v[i]+v[j]+v[l]+v[r])==k){
+                    set<ll>s;
+                    mm(ll,ll) m1;
+                    m1[v[i]]++;
+                    m1[v[j]]++;
+                    m1[v[l]]++;
+                    m1[v[r]]++;
+                    for(auto &x:m1){
+                        rep(p,0,x.second)
+                           s.insert(m[x.first][p]);
+                    }
+                    for(auto &x:s)
+                       cout<<x<<" ";
+                    flag=true;
+                    break;
+                }
+                else if((v[i]+v[j]+v[l]+v[r])>k)r--;
+                else l++;
             }
-            s.insert(v[a_pointer]);
+            if(flag)break;
         }
-        else s.insert(v[a_pointer]);
-        max_len=max(max_len,a_pointer-b_pointer+1);
-        a_pointer++;
+        if(flag)break;
     }
-    cout<<max_len<<endl;
+    if(!flag)cout<<"IMPOSSIBLE";
 }
 void input(){
-    cin>>n;
+    cin>>n>>k;
     solve();
 }
 int main(){

@@ -25,25 +25,31 @@ ll n,i,j,k,p,q,m,target,mod=1e9+7;
 using namespace std;
 ll count1=0;
 void solve(){
-    vv(ll) v(n,0);
-    rep(i,0,n)cin>>v[i];
-    set<ll>s;
-    ll count=0,a_pointer=0,b_pointer=0,max_len=-1;
-    while(a_pointer<v.size()){
-        if(s.find(v[a_pointer])!=s.end()){
-            s.erase(v[b_pointer]);
-            b_pointer++;
-            while(s.find(v[a_pointer])!=s.end()){
-                s.erase(v[b_pointer]);
-                b_pointer++;
-            }
-            s.insert(v[a_pointer]);
+    vv(ll) v1(n,0),v2(n,0);
+    rep(i,0,n)cin>>v1[i]>>v2[i];
+    sort(v1.begin(),v1.end());
+    sort(v2.begin(),v2.end());
+    vv(ll) v;
+    bool flag=false;
+    ll room_needed=0,i=0,j=0,max_element=0,num=0;
+    while(i<n && j<n){
+        if(v1[i]<=v2[j]){
+            room_needed++;
+            if(!flag)
+               v.push_back(room_needed);
+            flag=false;
+            i++;
         }
-        else s.insert(v[a_pointer]);
-        max_len=max(max_len,a_pointer-b_pointer+1);
-        a_pointer++;
+        else{
+            room_needed--;
+            flag=true;
+            v.push_back(room_needed);
+            j++;
+        }
+        max_element=max(room_needed,max_element);
     }
-    cout<<max_len<<endl;
+    cout<<max_element<<endl;
+    for(auto &x:v)cout<<x<<" ";
 }
 void input(){
     cin>>n;

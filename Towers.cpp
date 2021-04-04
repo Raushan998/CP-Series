@@ -27,23 +27,15 @@ ll count1=0;
 void solve(){
     vv(ll) v(n,0);
     rep(i,0,n)cin>>v[i];
-    set<ll>s;
-    ll count=0,a_pointer=0,b_pointer=0,max_len=-1;
-    while(a_pointer<v.size()){
-        if(s.find(v[a_pointer])!=s.end()){
-            s.erase(v[b_pointer]);
-            b_pointer++;
-            while(s.find(v[a_pointer])!=s.end()){
-                s.erase(v[b_pointer]);
-                b_pointer++;
-            }
-            s.insert(v[a_pointer]);
-        }
-        else s.insert(v[a_pointer]);
-        max_len=max(max_len,a_pointer-b_pointer+1);
-        a_pointer++;
+    vv(ll) v1;
+    rep(i,0,n){
+        int p=upper_bound(v1.begin(),v1.end(),v[i])-v1.begin();
+        if(p<v1.size())
+          v1[p]=v[i];
+        else v1.push_back(v[i]);
     }
-    cout<<max_len<<endl;
+    cout<<v1.size()<<endl;
+    
 }
 void input(){
     cin>>n;

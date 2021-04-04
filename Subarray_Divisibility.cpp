@@ -18,7 +18,7 @@ using namespace std;
 #define vv2 vector<pair<ll, ll>>
 #define mm1 map<ll, vector<ll>>
 #define dw cout << endl
-#define w()   int t;cin >> t; while (t--)
+#define w() int t;cin >> t; while (t--)
 #define it(x, m) for (auto x : m)
 #define pb(v, x) v.push_back(x)
 ll n,i,j,k,p,q,m,target,mod=1e9+7;
@@ -27,26 +27,18 @@ ll count1=0;
 void solve(){
     vv(ll) v(n,0);
     rep(i,0,n)cin>>v[i];
-    set<ll>s;
-    ll count=0,a_pointer=0,b_pointer=0,max_len=-1;
-    while(a_pointer<v.size()){
-        if(s.find(v[a_pointer])!=s.end()){
-            s.erase(v[b_pointer]);
-            b_pointer++;
-            while(s.find(v[a_pointer])!=s.end()){
-                s.erase(v[b_pointer]);
-                b_pointer++;
-            }
-            s.insert(v[a_pointer]);
-        }
-        else s.insert(v[a_pointer]);
-        max_len=max(max_len,a_pointer-b_pointer+1);
-        a_pointer++;
+    vv(ll) dp(n+1,0);
+    mm(ll,ll) m;
+    ll count=0;
+    rep(i,0,n){
+        dp[i+1]=dp[i]+v[i];
+        if(m.find(dp[i+1]%n)!=m.end())count+=m[dp[i+1]%n];
+        m[dp[i+1]%n]++;
     }
-    cout<<max_len<<endl;
+    ou(count);
 }
 void input(){
-    cin>>n;
+    cin>>n>>k;
     solve();
 }
 int main(){

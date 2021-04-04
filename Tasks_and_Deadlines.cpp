@@ -24,26 +24,26 @@ using namespace std;
 ll n,i,j,k,p,q,m,target,mod=1e9+7;
 using namespace std;
 ll count1=0;
-void solve(){
-    vv(ll) v(n,0);
-    rep(i,0,n)cin>>v[i];
-    set<ll>s;
-    ll count=0,a_pointer=0,b_pointer=0,max_len=-1;
-    while(a_pointer<v.size()){
-        if(s.find(v[a_pointer])!=s.end()){
-            s.erase(v[b_pointer]);
-            b_pointer++;
-            while(s.find(v[a_pointer])!=s.end()){
-                s.erase(v[b_pointer]);
-                b_pointer++;
-            }
-            s.insert(v[a_pointer]);
+bool isValid(ll mid,vv(ll) v,ll k){
+    ll sum=0,count=0;
+    rep(i,0,n){
+        sum+=v[i];
+        if(sum>mid){
+            count++;
         }
-        else s.insert(v[a_pointer]);
-        max_len=max(max_len,a_pointer-b_pointer+1);
-        a_pointer++;
     }
-    cout<<max_len<<endl;
+    return count<=k;
+}
+void solve(){
+    vv1 v(n,vv(ll)(2,0));
+    rep(i,0,n)cin>>v[i][0]>>v[i][1];
+    sort(v.begin(),v.end());
+    ll t=0,ans=0;
+    rep(i,0,n){
+        t+=v[i][0];
+        ans+=(v[i][1]-t);
+    }
+    ou(ans);
 }
 void input(){
     cin>>n;
